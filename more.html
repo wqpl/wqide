@@ -2,64 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=index.html?route=more.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>wqide - More</title>
-    <link rel="stylesheet" href="assets/styles.css" />
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="js/app.js"></script>
+    <title>wqide</title>
+    <link rel="canonical" href="index.html?route=more.html" />
+    <script>
+      location.replace("index.html?route=more.html" + location.search.replace(/^\?/, "&") + location.hash);
+    </script>
   </head>
-  <body>
-    <!-- <button class="edge left" aria-label="Previous section"></button>
-    <button class="edge right" aria-label="Next section"></button> -->
-
-    <header class="topbar">
-      <div class="topbar-row">
-        <div class="brand">wqide</div>
-        <div class="pillbar" aria-label="Quick toggles">
-          <div class="pills" role="list"></div>
-        </div>
-      </div>
-      <nav class="tabs" role="tablist" aria-label="Sections">
-        <a href="index.html" data-nav="featured">Featured</a>
-        <a href="playground.html" data-nav="playground">Playground</a>
-        <a href="repl.html" data-nav="repl">REPL</a>
-        <a href="more.html" data-nav="more">More</a>
-      </nav>
-    </header>
-
-    <main class="wrap">
-      <article class="article">
-        <h1>About wqide</h1>
-        <ul>
-          <li>wqide: the interactive wq devel env</li>
-          <li><a href="https://github.com/illusory-dept/wq" target="_blank" rel="noopener">wq</a>: a programming language</li>
-          <li><a href="https://illusory-dept.github.io" target="_blank" rel="noopener">illusory-dept</a>: a hobby group for langs</li>
-        </ul>
-        <h2>Copyright</h2>
-        <h3>wqide</h3>
-        <p>Copyright (c) 2025 tttiw</p>
-        <h3>wq</h3>
-        <p>Copyright (c) 2025 tttiw</p>
-        <h2>Licenses</h2>
-        <h3>wqide</h3>
-        <p>MIT license</p>
-        <h3>wq</h3>
-        <p>MIT license</p>
-        <h2>Version</h2>
-        <ul>
-          <li>wqide: 0.1.0</li>
-          <li>wq: 0.7.0-a4</li>
-        </ul>
-        <h2>Contact</h2>
-        <p>tttiw@nekoarch.cc</p>
-      </article>
-    </main>
-    <!-- <script>
-      // simple year substitution
-      document.body.innerHTML = document.body.innerHTML.replace(
-        "{year}",
-        new Date().getFullYear(),
-      );
-    </script> -->
-  </body>
+  <body></body>
 </html>

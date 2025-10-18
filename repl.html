@@ -2,69 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=index.html?route=repl.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>wqide - REPL</title>
-    <link rel="stylesheet" href="assets/styles.css" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <script type="module" src="js/app.js"></script>
+    <title>wqide</title>
+    <link rel="canonical" href="index.html?route=repl.html" />
+    <script>
+      location.replace("index.html?route=repl.html" + location.search.replace(/^\?/, "&") + location.hash);
+    </script>
   </head>
-  <body>
-    <!-- <button class="edge left" aria-label="Previous section"></button>
-    <button class="edge right" aria-label="Next section"></button> -->
-
-    <header class="topbar">
-      <div class="topbar-row">
-        <div class="brand">wqide</div>
-        <div class="pillbar" aria-label="Quick toggles">
-          <div class="pills" role="list"></div>
-        </div>
-      </div>
-      <nav class="tabs" role="tablist" aria-label="Sections">
-        <a href="index.html" data-nav="featured">Featured</a>
-        <a href="playground.html" data-nav="playground">Playground</a>
-        <a href="repl.html" data-nav="repl">REPL</a>
-        <a href="more.html" data-nav="more">More</a>
-      </nav>
-    </header>
-
-    <main class="wrap">
-      <div class="repl">
-        <div class="toolbar headbar">
-          <button id="resetBtn" class="btn" type="button">Reset Session</button>
-          <div class="stdin">
-            <span class="mini">stdin:</span>
-            <input
-              id="stdinLine"
-              type="text"
-              placeholder="Provide input text for your program..." />
-            <button id="pushStdinBtn" class="btn" type="button">Push</button>
-          </div>
-        </div>
-        <div class="repl-split">
-          <div class="codepane left">
-            <div class="toolbar inner codebar">
-              <button id="evalBtn" class="btn primary" type="button">
-                Eval
-              </button>
-              <span class="mini">Enter: eval | Shift+Enter: newline</span>
-            </div>
-            <textarea
-              id="code"
-              class="editor-text"
-              spellcheck="false"
-              placeholder="echo echo"></textarea>
-          </div>
-          <div class="codepane right">
-            <div class="toolbar flat termbar">
-              <strong>Terminal</strong>
-              <button id="clearBtn" class="btn" type="button">Clear</button>
-            </div>
-            <pre id="term" class="run-output" aria-live="polite"></pre>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <script type="module" src="js/repl.js"></script>
-  </body>
+  <body></body>
 </html>

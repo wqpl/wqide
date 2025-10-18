@@ -2,61 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=index.html?route=article.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>wqide</title>
-    <link rel="stylesheet" href="assets/styles.css" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <script type="module" src="js/app.js"></script>
+    <link rel="canonical" href="index.html?route=article.html" />
+    <script>
+      location.replace("index.html?route=article.html" + location.search.replace(/^\?/, "&") + location.hash);
+    </script>
   </head>
-  <body>
-    <header class="topbar">
-      <div class="topbar-row">
-        <div class="brand">wqide</div>
-        <div class="pillbar" aria-label="Quick toggles">
-          <div class="pills" role="list"></div>
-        </div>
-      </div>
-      <nav class="tabs" role="tablist" aria-label="Sections">
-        <a href="index.html" data-nav="featured">Featured</a>
-        <a href="playground.html" data-nav="playground">Playground</a>
-        <a href="repl.html" data-nav="repl">REPL</a>
-        <a href="more.html" data-nav="more">More</a>
-      </nav>
-    </header>
-
-    <main class="wrap">
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="index.html">~</a> <span class="sep">/</span>
-        <a id="crumb-section" href="subfolder.html">Section</a>
-        <span class="sep">/</span>
-        <span id="crumb-title">Loading…</span>
-      </nav>
-
-      <div class="layout-3col">
-        <!-- Left outline rail -->
-        <aside class="left-rail">
-          <div class="sticky">
-            <div class="outline">
-              <h3>Outline</h3>
-              <div id="outlineList" aria-label="Section navigation"></div>
-            </div>
-          </div>
-        </aside>
-
-        <!-- Article -->
-        <article class="article" id="articleRoot">
-          <details class="mobile-outline">
-            <summary>Outline</summary>
-            <div id="mobileOutline"></div>
-          </details>
-          <h1 id="articleTitle">Loading...</h1>
-          <div id="articleContent">Please wait while the tutorial loads.</div>
-        </article>
-
-        <!-- Right support rail intentionally omitted -->
-      </div>
-    </main>
-
-    <script type="module" src="js/article.js"></script>
-  </body>
+  <body></body>
 </html>

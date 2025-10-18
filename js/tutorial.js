@@ -1,22 +1,47 @@
-// Build outline from headings, scrollspy, and copy-to-clipboard buttons
-// after article content is injected.
+// Build outline from headings, scrollspy, copy-to-clipboard buttons after article content is injected.
 
-import init, { run_wasm } from "./wq/wq.js";
-await init(new URL("./wq/wq_bg.wasm", import.meta.url));
+import init, {
+  eval_wq,
+  set_stdout_callback,
+  set_stdin_callback,
+  set_stderr_callback,
+} from "../vendors/wq/pkg/wqpl.js";
+
+let __wq_inited = false;
+let __outlineObserver = null;
+let __outlineLockUntil = 0;
+async function ensureWasm() {
+  if (!__wq_inited) {
+    await init(new URL("../vendors/wq/pkg/wqpl_bg.wasm", import.meta.url));
+    __wq_inited = true;
+  }
+}
+// Defer WASM init until the first Run click.
 
 window.initTutorialUI = function initTutorialUI() {
-  const article = document.querySelector(".article");
+  const article =
+    document.querySelector(".article[data-active-article='true']") ||
+    document.querySelector(".article");
   const outlineList = document.querySelector("#outlineList");
   const mobileOutline = document.querySelector("#mobileOutline");
 
   if (article && outlineList) {
+    if (__outlineObserver) {
+      __outlineObserver.disconnect();
+      __outlineObserver = null;
+    }
+
     // Reset any existing outline
     outlineList.innerHTML = "";
     if (mobileOutline) mobileOutline.innerHTML = "";
 
+    const articleKey =
+      article.getAttribute("data-article-slug") ||
+      article.getAttribute("data-view") ||
+      "article";
     const headings = Array.from(article.querySelectorAll("h2, h3"));
     headings.forEach((h, idx) => {
-      if (!h.id) h.id = "sec-" + (idx + 1);
+      h.id = `${articleKey}-sec-${idx + 1}`;
       const a = document.createElement("a");
       a.href = "#" + h.id;
       a.textContent = h.textContent;
@@ -37,19 +62,24 @@ window.initTutorialUI = function initTutorialUI() {
       links.forEach((l) =>
         l.classList.toggle("active", l.getAttribute("href") === "#" + id),
       );
+      mlinks.forEach((l) =>
+        l.classList.toggle("active", l.getAttribute("href") === "#" + id),
+      );
     }
-    const observer = new IntersectionObserver(
+    __outlineObserver = new IntersectionObserver(
       (entries) => {
+        if (Date.now() < __outlineLockUntil) return;
+
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible[0]) {
           activate(visible[0].target.id);
         }
       },
-      { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] },
+      { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.1, 0.25, 0.5, 1] },
     );
-    headings.forEach((h) => observer.observe(h));
+    headings.forEach((h) => __outlineObserver.observe(h));
 
     // smooth scroll
     function hookup(list) {
@@ -57,11 +87,12 @@ window.initTutorialUI = function initTutorialUI() {
         a.addEventListener("click", (e) => {
           e.preventDefault();
           const id = a.getAttribute("href").slice(1);
-          const target = document.getElementById(id);
+          const target = article.querySelector(`#${CSS.escape(id)}`);
           if (target) {
+            __outlineLockUntil = Date.now() + 700;
             const top =
-              target.getBoundingClientRect().top +
-              window.scrollY -
+              window.scrollY +
+              target.getBoundingClientRect().top -
               (parseInt(
                 getComputedStyle(document.documentElement).getPropertyValue(
                   "--header-h",
@@ -78,8 +109,11 @@ window.initTutorialUI = function initTutorialUI() {
     hookup(mlinks);
   }
 
+  if (!article) return;
+
   // Enhance code blocks: wrap pre in .code-wrapper with header and copy button
-  document.querySelectorAll(".article pre").forEach((pre) => {
+  article.querySelectorAll("pre").forEach((pre) => {
+    if (pre.closest(".run-result")) return;
     if (
       pre.parentElement &&
       pre.parentElement.classList.contains("code-wrapper")
@@ -104,7 +138,7 @@ window.initTutorialUI = function initTutorialUI() {
     if (lang) {
       const langSpan = document.createElement("span");
       langSpan.className = "lang";
-      langSpan.textContent = lang.toUpperCase();
+      langSpan.textContent = lang.toLowerCase();
       header.appendChild(langSpan);
     } else {
       // add an empty spacer to keep layout consistent
@@ -117,6 +151,12 @@ window.initTutorialUI = function initTutorialUI() {
     // Right: actions (Run for wq + Copy)
     const actions = document.createElement("div");
     actions.className = "code-actions";
+
+    const btn = document.createElement("button");
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+    actions.appendChild(btn);
+    header.appendChild(actions);
 
     if (lang === "wq") {
       const run = document.createElement("button");
@@ -153,18 +193,28 @@ window.initTutorialUI = function initTutorialUI() {
         // stream printed output; clear previous
         codeOut.textContent = "";
         try {
-          console.log("clicked run with code =", code, "stdin =", stdinArr);
-          const out = await run_wasm(code, {
-            stdin: stdinArr,
-            stdout: (chunk) => {
-              codeOut.textContent += chunk;
-            },
+          await ensureWasm();
+          set_stdout_callback((chunk) => {
+            codeOut.textContent += chunk;
           });
-          const result =
-            typeof out === "string" ? out : JSON.stringify(out, null, 2);
-          const needsNL =
-            codeOut.textContent && !codeOut.textContent.endsWith("\n");
-          codeOut.textContent += (needsNL ? "\n" : "") + "\u{258D} " + result;
+          set_stderr_callback((chunk) => {
+            codeOut.textContent += chunk;
+          });
+          const queue = [...stdinArr];
+          set_stdin_callback((_prompt) =>
+            queue.length ? String(queue.shift()) : null,
+          );
+          const result = eval_wq(code);
+          if (
+            result !== undefined &&
+            result !== null &&
+            String(result).length
+          ) {
+            const needsNL =
+              codeOut.textContent && !codeOut.textContent.endsWith("\n");
+            codeOut.textContent +=
+              (needsNL ? "\n" : "") + "\u{258D} " + String(result);
+          }
         } catch (err) {
           console.error(err);
           codeOut.textContent = (err?.message ?? String(err)) + "\n";
@@ -175,28 +225,37 @@ window.initTutorialUI = function initTutorialUI() {
       actions.appendChild(run);
     }
 
-    const btn = document.createElement("button");
-    btn.className = "copy-btn";
-    btn.textContent = "Copy";
-    actions.appendChild(btn);
-    header.appendChild(actions);
-
     // move pre inside wrapper
     pre.parentNode.insertBefore(wrapper, pre);
     wrapper.appendChild(header);
     wrapper.appendChild(pre);
 
     btn.addEventListener("click", async () => {
+      const text = pre.innerText;
       try {
-        await navigator.clipboard.writeText(pre.innerText);
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          const success = document.execCommand("copy");
+          textArea.remove();
+          if (!success) throw new Error("Fallback copy failed");
+        }
         btn.textContent = "✓ Copied";
-        btn.classList.add("copied");
         setTimeout(() => {
           btn.textContent = "Copy";
-          btn.classList.remove("copied");
         }, 1400);
       } catch (e) {
         btn.textContent = "Error";
+        setTimeout(() => {
+          btn.textContent = "Copy";
+        }, 1400);
       }
     });
   });
