@@ -758,13 +758,14 @@ async function mountPlayground(route) {
 
 async function mountRepl() {
   const root = getView("repl", REPL_HTML);
+  const mod = await import("./repl.js");
   if (!root.dataset.booted) {
-    const mod = await import("./repl.js");
     if (mod.mountRepl) {
       await mod.mountRepl(root);
     }
     root.dataset.booted = "true";
   }
+  mod.activateRepl?.();
   document.title = "wqide - REPL";
   showView(root);
 }

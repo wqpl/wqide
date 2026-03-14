@@ -125,18 +125,21 @@ function append(chunk) {
   scrollThreadToBottom();
 }
 
+function bindRuntimeCallbacks() {
+  set_stdout_callback((chunk) => append(chunk));
+  set_stderr_callback((chunk) => append(chunk));
+  set_stdin_callback((p) => {
+    if (stdinQueue.length > 0) return String(stdinQueue.shift());
+    const msg = typeof p === "string" ? p : "stdin:";
+    const ans = window.prompt(msg || "stdin:");
+    if (ans === null) return null;
+    return ans;
+  });
+}
+
 function ensureSession() {
   if (!session) {
     session = new WqSession();
-    set_stdout_callback((chunk) => append(chunk));
-    set_stderr_callback((chunk) => append(chunk));
-    set_stdin_callback((p) => {
-      if (stdinQueue.length > 0) return String(stdinQueue.shift());
-      const msg = typeof p === "string" ? p : "stdin:";
-      const ans = window.prompt(msg || "stdin:");
-      if (ans === null) return null;
-      return ans;
-    });
   }
   return session;
 }
@@ -248,6 +251,7 @@ function resetSession() {
   currentTurn = null;
   ui.term.innerHTML = "";
   ui.term.appendChild(ui.composerForm);
+  bindRuntimeCallbacks();
   ensureSession();
   append(`wq ${wqVersion} (c)tttiw (l)MIT\n`);
   setActive(ui.pillBox, false);
@@ -264,6 +268,7 @@ async function doEval() {
   ui.evalBtn.disabled = true;
   try {
     const start = performance.now();
+    bindRuntimeCallbacks();
     const out = ensureSession().eval_wq(code);
     const end = performance.now();
     if (!history.length || history[history.length - 1] !== code) {
@@ -314,6 +319,7 @@ export async function mountRepl(root) {
       ]),
     ),
   };
+  bindRuntimeCallbacks();
 
   [ui.copyFlowBtn, ui.copyOutputBtn].forEach((btn) => {
     if (!btn) return;
@@ -421,4 +427,10 @@ export async function mountRepl(root) {
 
   autoSizeComposer();
   resetSession();
+}
+
+export function activateRepl() {
+  if (!ui) return;
+  bindRuntimeCallbacks();
+  syncDebugControls();
 }
