@@ -91,12 +91,9 @@ const FEATURED_HTML = `
 const PLAYGROUND_HTML = `
   <main class="wrap">
     <div class="playground-shell">
-      <section class="playground-templates more-card" aria-labelledby="templateHeading">
-        <div class="playground-templates-head">
-          <div>
-            <h2 id="templateHeading">Example snippets</h2>
-            <p class="playground-templates-copy">Tap a card to drop an example into the editor.</p>
-          </div>
+      <section class="more-card" aria-labelledby="templateHeading">
+        <div>
+          <h2 id="templateHeading">Examples</h2>
         </div>
         <div class="playground-template-grid" role="list">
           <button class="playground-template-card playground-template-card-1" type="button" data-template="asciiplot">

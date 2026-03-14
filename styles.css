@@ -456,7 +456,7 @@ body {
   background: #f6fbff;
   border: 1px solid #cfe6f6;
   border-radius: 14px;
-  overflow: visible;
+  overflow: hidden;
   /*box-shadow: 0 6px 14px rgba(20, 60, 100, 0.08);*/
 }
 
@@ -893,24 +893,22 @@ textarea.editor-text.repl-input {
   border-bottom-right-radius: 0;
 }
 .run-output {
-  /* Acts as an inner divider with dashed top; outer border stays on container */
   border-top: 1px dashed #cfe6f6;
   margin: 0;
   padding: 10px 12px;
   background: #ffffff;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   color: #0b4060;
-  /* wrap long lines */
-  /*white-space: pre-wrap; */
-  overflow: auto; /* scroll when needed */
-  word-break: break-word; /* avoid overflow on long tokens */
+  white-space: pre-wrap;
+  overflow: auto;
+  /*word-break: break-word;*/
   min-height: 0; /* allow flex children to not overflow containers */
   /*max-height: 400px;*/
   border-radius: 0 0 14px 14px;
 }
-/*.run-output:empty {
+.run-output:empty {
   display: none;
-}*/
+}
 .info-doc {
   background: white;
   border: 1px solid #cfe6f6;
