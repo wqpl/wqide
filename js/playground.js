@@ -32,7 +32,7 @@ function readDebugFlags(instance) {
 function writeDebugFlags(instance, flags) {
   const next = DEBUG_FLAGS.filter((flag) => flags.includes(flag));
   if (instance.debugFlagsInput) {
-    instance.debugFlagsInput.value = next.join(",");
+    instance.debugFlagsInput.value = next.length ? next.join(",") : "0";
   }
   DEBUG_FLAGS.forEach((flag) => {
     const button = instance.debugButtons?.[flag];
@@ -123,7 +123,7 @@ async function doEval(instance) {
     set_stdin_callback((_prompt) =>
       queue.length ? String(queue.shift()) : null,
     );
-    const flags = instance.debugFlagsInput?.value || "";
+    const flags = instance.debugFlagsInput?.value || "0";
     const result = flags
       ? (() => {
           const session = new WqSession();

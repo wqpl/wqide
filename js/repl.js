@@ -39,10 +39,10 @@ function hasDebugFlag(flag) {
 
 function setDebugFlags(flags) {
   const next = DEBUG_FLAGS.filter((flag) => flags.includes(flag));
-  ensureSession().set_debug_flags(next.join(","));
+  ensureSession().set_debug_flags(next.length ? next.join(",") : "0");
   syncDebugControls();
-  append(
-    `debug flags changed to ${next.length ? next.join(",") : "off"}\n`,
+  console.log(
+    `[repl] debug flags -> ${next.length ? next.join(",") : "off"}\n`,
   );
 }
 
@@ -338,12 +338,12 @@ export async function mountRepl(root) {
   ui.pillBox?.addEventListener("click", () => {
     const on = set_box_mode();
     setActive(ui.pillBox, on);
-    // append(`box mode changed to ${on ? "on" : "off"}\n`);
+    console.log(`[repl] box mode -> ${on ? "on" : "off"}\n`);
   });
   ui.pillTime?.addEventListener("click", () => {
     timeMode = !timeMode;
     setActive(ui.pillTime, timeMode);
-    // append(`time mode changed to ${timeMode ? "on" : "off"}\n`);
+    console.log(`[repl] time mode -> ${timeMode ? "on" : "off"}\n`);
   });
   DEBUG_FLAGS.forEach((flag) => {
     ui.debugButtons[flag]?.addEventListener("click", () => {
