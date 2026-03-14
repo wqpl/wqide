@@ -1,6 +1,6 @@
 # Loops
 
-A **Loop** let you run code repeatedly: for a fixed number of times, while a condition holds, or once per element in a value.
+A **loop** let you run code repeatedly: for a fixed number of times, while a condition holds, or once per element in a value.
 
 A loop is an expression, it evaluates to the result of its last iteration.
 If a loop never runs, it yields `()`.

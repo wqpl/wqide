@@ -1,6 +1,6 @@
 # Conditionals
 
-A **Conditional** lets you run code only when a condition is met.
+A **conditional** lets you run code only when a condition is met.
 
 wq conditionals are expressions. This means every conditional yields a value, allowing you to pass it to a function, assign it to a variable, or use it directly in a calculation.
 

@@ -39,7 +39,7 @@ However, there are a few restrictions:
 
 Notice how wq allows you to change a binding's data type when replacing its value:
 
-Hint: `type` is a built-in function that returns a value's data type.
+Hint: `type` is a bfn that returns a value's data type.
 
 ```wq
 x:10

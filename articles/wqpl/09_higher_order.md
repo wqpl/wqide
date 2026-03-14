@@ -1,12 +1,12 @@
 # Higher-order bfns
 
-A "higher-order" function is one that either accepts other functions as arguments or returns them.
+A **higher-order** function is one that either accepts other functions as arguments or returns them.
 
 wq provides several higher-order bfns to help you write clean, concise, and data-oriented code.
 
 ## `filter`
 
-`filter[f;xs]` keeps only the items in your list for which the given function `f` returns `true`.
+`filter[f;xs]` keeps only the items in your list `xs` for which the given function `f` returns `true`.
 
 ```wq
 xs:1..=10
@@ -24,24 +24,35 @@ map[{x*10};xs]
 
 ## `fold`
 
-`fold[f;xs]` "folds" a list into a single value.
+`fold[f;acc;xs]` "folds" a list into a single value.
 
-It starts with an initial value and processes the list item-by-item.
+It starts with an initial value `acc` and processes your list `xs` item-by-item.
 
-For each item, it uses your function to combine the current result with that item to create a new, updated result.
+For each item, it uses your function `f` to combine the current result with that item to create a new, updated result.
 
 ```wq
-xs:(1;2;3;4;5)
-fold[{[a;x]a+x};0;xs]
+xs:1..=5
+fold[{[a;x]a+x};100;xs]
+```
+
+You can omit `acc`. In that case, `fold[f;xs]`:
+
+- Checks if `xs` is empty. If it is, it returns `()`.
+- If not empty, it takes the first item as the initial accumulator.
+- It then iterates over the _remaining_ items, applying your folding function `f`.
+
+```wq
+xs:1..=5
+fold[{[a;x]a+x};xs]
 ```
 
 ## `scan`
 
-`scan[f;xs]` is like `fold`, but instead of returning only the final result, it returns a list of all intermediate values.
+`scan[f;acc;xs]` (and `scan[f;xs]`) is like `fold`, but instead of returning only the final result, it returns a list of all intermediate values.
 
 ```wq
-xs:(1;2;3;4;5)
-scan[{[acc;x]acc+x};0;xs]
+xs:1..=5
+scan[{[a;x]a+x};xs]
 ```
 
 ## Pipe `|`

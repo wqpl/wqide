@@ -87,7 +87,7 @@ To concatenate lists in wq, use the comma `,` operator:
 
 A _char_ is a character defined by one Unicode codepoint (an English letter, a Chinese character, a kana, ...).
 
-A _string_ is a list of chars. 
+A _string_ is a list of chars.
 
 In wq, both chars and strings are always written using double quotes ("). wq looks at the length of the text: if it is one codepoint, it is a char; if it is multiple, it is a string.
 
