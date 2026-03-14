@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap");
 
 :root {
-  --page-top-1: #2f76b9;
-  --page-top-2: #2a6aa8;
+  --page-top: #2f76b9;
+  /*--page-top-2: #2a6aa8;*/
   --tab-mint: #7fffe0;
   --bg: #d7e9f6;
-  --panel-1: #33b9ff;
-  --panel-2: #22a8f1;
   --panel-edge: #ffffff26;
   --panel-inner: #00000012;
   --text: #f7feff;
@@ -80,7 +78,7 @@ body {
 
 .topbar {
   z-index: 1000;
-  background: linear-gradient(0deg, var(--page-top-2), var(--page-top-1));
+  background: var(--page-top);
   color: #dff4ff;
   padding: 24px 20px 10px;
   position: fixed;
@@ -500,9 +498,7 @@ body {
   min-height: 340px;
   max-height: calc(100vh - var(--header-h) - 96px);
   overflow: auto;
-  background:
-    radial-gradient(circle at top right, #e3f4ff 0, transparent 34%),
-    linear-gradient(180deg, #f7fcff 0%, #eef8ff 100%);
+  background: #f7fcff;
 }
 .repl-turn {
   display: flex;
