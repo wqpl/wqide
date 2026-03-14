@@ -1,0 +1,21 @@
+{
+  "name": "wqpl",
+  "type": "module",
+  "description": "The wq Programming Language",
+  "version": "0.8.0-b1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://codeberg.org/wqpl/wq"
+  },
+  "files": [
+    "wqpl_bg.wasm",
+    "wqpl.js",
+    "wqpl.d.ts"
+  ],
+  "main": "wqpl.js",
+  "types": "wqpl.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

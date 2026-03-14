@@ -1,0 +1,30 @@
+/* tslint:disable */
+/* eslint-disable */
+export const memory: WebAssembly.Memory;
+export const __wbg_wqsession_free: (a: number, b: number) => void;
+export const eval_wq: (a: number, b: number) => [number, number, number, number];
+export const get_builtins: () => [number, number];
+export const get_err_codes: () => [number, number];
+export const get_help_doc: () => [number, number];
+export const get_wq_ver: () => [number, number];
+export const set_box_mode: () => number;
+export const set_stderr_callback: (a: number) => void;
+export const set_stdin_callback: (a: number) => void;
+export const set_stdout_callback: (a: number) => void;
+export const wqsession_clear_env: (a: number) => void;
+export const wqsession_eval_wq: (a: number, b: number, c: number) => [number, number, number, number];
+export const wqsession_get_bt_mode: (a: number) => void;
+export const wqsession_get_debug_flags: (a: number) => [number, number];
+export const wqsession_get_env: (a: number) => [number, number];
+export const wqsession_new: () => number;
+export const wqsession_reset_session: (a: number) => void;
+export const wqsession_set_bt_mode: (a: number, b: number) => void;
+export const wqsession_set_debug_flags: (a: number, b: number, c: number) => [number, number];
+export const __wbindgen_exn_store: (a: number) => void;
+export const __externref_table_alloc: () => number;
+export const __wbindgen_export_2: WebAssembly.Table;
+export const __wbindgen_malloc: (a: number, b: number) => number;
+export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+export const __wbindgen_free: (a: number, b: number, c: number) => void;
+export const __externref_table_dealloc: (a: number) => void;
+export const __wbindgen_start: () => void;
