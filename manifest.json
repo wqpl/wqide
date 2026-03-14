@@ -44,7 +44,7 @@
       "slug": "conditionals",
       "title": "Conditionals",
       "file": "articles/wqpl/06_conditionals.md",
-      "description": "Choose values with ternary, guard, and chain expressions.",
+      "description": "Choose branches with ternary, guard, and chain expressions.",
       "section": "wqpl",
       "code": "$[n>0;\"+\";\"-\"]"
     },
@@ -52,7 +52,7 @@
       "slug": "loops",
       "title": "Loops",
       "file": "articles/wqpl/07_loops.md",
-      "description": "Repeat work with while, times, and for-each loops.",
+      "description": "Repeat work with three styles of loops.",
       "section": "wqpl",
       "code": "N[3;echo _n]"
     },
@@ -68,7 +68,7 @@
       "slug": "higher-order-bfns",
       "title": "Higher-Order Bfns",
       "file": "articles/wqpl/09_higher_order.md",
-      "description": "Transform lists with builtins like map, filter, fold, and scan.",
+      "description": "Transform lists with bfns like filter, map, fold, and scan.",
       "section": "wqpl",
       "code": "1..10|fold{x*y}"
     },
@@ -76,7 +76,7 @@
       "slug": "errors",
       "title": "Errors",
       "file": "articles/wqpl/10_error.md",
-      "description": "See how wq raises errors and turns them into values with @t.",
+      "description": "See how wq raises errors and turns them into values with `@t`.",
       "section": "wqpl",
       "code": "@t 1/0"
     },

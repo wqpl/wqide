@@ -48,7 +48,7 @@ const FEATURED_HTML = `
 
     <section class="card">
       <h2>The wq Programming Language</h2>
-      <p>A short journey through the fundamentals of wq</p>
+      <p>A short journey through the fundamentals of wq.</p>
       <span class="code">f:{(f_:{$[x=0;y;f_[x-1;z;y+z]]})[x;0;1]}</span>
       <a
         class="stretched"
@@ -76,7 +76,7 @@ const FEATURED_HTML = `
 
     <section class="card">
       <h2>WIP</h2>
-      <p>Test and WIP articles</p>
+      <p>Tests and WIP articles.</p>
       <span class="code">//todo</span>
       <a
         class="stretched"
@@ -116,7 +116,7 @@ const PLAYGROUND_HTML = `
           </button>
           <button class="playground-template-card playground-template-card-4" type="button" data-template="cowsay">
             <strong>Cowsay</strong>
-            <span class="playground-template-desc">A cow that moos</span>
+            <span class="playground-template-desc">An ASCII cow that moos.</span>
             <code class="playground-template-code">cowsay:{...}</code>
           </button>
         </div>
