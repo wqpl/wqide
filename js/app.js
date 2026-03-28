@@ -239,7 +239,7 @@ const MORE_HTML = `
               </tr>
               <tr>
                 <td>wq</td>
-                <td>0.8.0-b1</td>
+                <td>0.8.0</td>
               </tr>
             </tbody>
           </table>

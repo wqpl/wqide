@@ -172,15 +172,6 @@ function isLikeNone(x) {
     return x === undefined || x === null;
 }
 /**
- * Toggle boxed display of evaluation results. Returns the new state.
- * @returns {boolean}
- */
-export function set_box_mode() {
-    const ret = wasm.set_box_mode();
-    return ret !== 0;
-}
-
-/**
  * Error codes and names for quick reference
  * @returns {string}
  */
@@ -221,53 +212,6 @@ export function set_stdin_callback(cb) {
     wasm.set_stdin_callback(isLikeNone(cb) ? 0 : addToExternrefTable0(cb));
 }
 
-/**
- * Version string for splash and title
- * @returns {string}
- */
-export function get_wq_ver() {
-    let deferred1_0;
-    let deferred1_1;
-    try {
-        const ret = wasm.get_wq_ver();
-        deferred1_0 = ret[0];
-        deferred1_1 = ret[1];
-        return getStringFromWasm0(ret[0], ret[1]);
-    } finally {
-        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
-    }
-}
-
-/**
- * @param {Function | null} [cb]
- */
-export function set_stderr_callback(cb) {
-    wasm.set_stderr_callback(isLikeNone(cb) ? 0 : addToExternrefTable0(cb));
-}
-
-/**
- * @param {Function | null} [cb]
- */
-export function set_stdout_callback(cb) {
-    wasm.set_stdout_callback(isLikeNone(cb) ? 0 : addToExternrefTable0(cb));
-}
-
-/**
- * @returns {string}
- */
-export function get_help_doc() {
-    let deferred1_0;
-    let deferred1_1;
-    try {
-        const ret = wasm.get_help_doc();
-        deferred1_0 = ret[0];
-        deferred1_1 = ret[1];
-        return getStringFromWasm0(ret[0], ret[1]);
-    } finally {
-        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
-    }
-}
-
 function takeFromExternrefTable0(idx) {
     const value = wasm.__wbindgen_export_2.get(idx);
     wasm.__externref_table_dealloc(idx);
@@ -296,6 +240,62 @@ export function eval_wq(code) {
         return getStringFromWasm0(ptr2, len2);
     } finally {
         wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+    }
+}
+
+/**
+ * @param {Function | null} [cb]
+ */
+export function set_stdout_callback(cb) {
+    wasm.set_stdout_callback(isLikeNone(cb) ? 0 : addToExternrefTable0(cb));
+}
+
+/**
+ * @param {Function | null} [cb]
+ */
+export function set_stderr_callback(cb) {
+    wasm.set_stderr_callback(isLikeNone(cb) ? 0 : addToExternrefTable0(cb));
+}
+
+/**
+ * Toggle boxed display of evaluation results. Returns the new state.
+ * @returns {boolean}
+ */
+export function set_box_mode() {
+    const ret = wasm.set_box_mode();
+    return ret !== 0;
+}
+
+/**
+ * @returns {string}
+ */
+export function get_help_doc() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.get_help_doc();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+    }
+}
+
+/**
+ * Version string for splash and title
+ * @returns {string}
+ */
+export function get_wq_ver() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.get_wq_ver();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
     }
 }
 

@@ -58,7 +58,9 @@ const PLAYGROUND_TEMPLATES = {
     stdin: "",
   },
   primes: {
-    code: "primes:{p:iota[x+1]>1;limit:floor sqrt x;i:2;W[i<=limit;$.[p[i];j:i*i;W[j<=x;p[j]:false;j:j+i]];i:$[i=2;3;i+2]];where p};primes[10000][-3..=-1]",
+    code: `primes:{p:iota[x+1]>1;limit:floor sqrt x;i:2
+  W[i<=limit;$.[p[i];j:i*i;p[j+i*iota[1+floor[(x-j)/i]]]:false];i:$[i=2;3;i+2]];where p}
+primes[10000][-3..=-1]`,
     stdin: "",
   },
   stdin: {
@@ -77,8 +79,7 @@ cowsay:{[msg]border:repeat["-";#msg+2]
   echo"                 ||-----w-|"
   echo"                 ||      ||"
 }
-cowsay input[]
-`,
+cowsay input[]`,
     stdin: "Moooving on!",
   },
 };

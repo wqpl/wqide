@@ -1,10 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Toggle boxed display of evaluation results. Returns the new state.
- */
-export function set_box_mode(): boolean;
-/**
  * Error codes and names for quick reference
  */
 export function get_err_codes(): string;
@@ -14,16 +10,20 @@ export function get_err_codes(): string;
 export function get_builtins(): string;
 export function set_stdin_callback(cb?: Function | null): void;
 /**
- * Version string for splash and title
- */
-export function get_wq_ver(): string;
-export function set_stderr_callback(cb?: Function | null): void;
-export function set_stdout_callback(cb?: Function | null): void;
-export function get_help_doc(): string;
-/**
  * Evaluate a string in a fresh VM and return the result as a string.
  */
 export function eval_wq(code: string): string;
+export function set_stdout_callback(cb?: Function | null): void;
+export function set_stderr_callback(cb?: Function | null): void;
+/**
+ * Toggle boxed display of evaluation results. Returns the new state.
+ */
+export function set_box_mode(): boolean;
+export function get_help_doc(): string;
+/**
+ * Version string for splash and title
+ */
+export function get_wq_ver(): string;
 export class WqSession {
   free(): void;
   get_bt_mode(): void;
